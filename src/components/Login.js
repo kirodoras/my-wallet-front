@@ -8,7 +8,7 @@ import logoImg from '../assets/logo.png';
 export default function Login() {
     return (
         <LoginStyled >
-            <LogoCardStyled>
+            <LogoCardStyled login>
                 <img src={logoImg} alt="Logo MyWallet" />
                 <h1>MyWallet</h1>
             </LogoCardStyled>
