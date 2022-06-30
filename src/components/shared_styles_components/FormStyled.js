@@ -6,9 +6,11 @@ const FormStyled = styled.form`
     gap: 1.2rem;
 
     width: 18rem;
-    margin-top: 3.5rem;
+    max-width: 100%;
+    margin-top: ${props => props.secondary ? '2rem' : '3.5rem'};
 
     input {
+        max-width: 100%;
         height: 2.5rem;
             
         background: #540394;

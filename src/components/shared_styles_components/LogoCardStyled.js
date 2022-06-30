@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 const LogoCardStyled = styled.div`
     width: 18rem;
+    max-width: 100%;
     height: ${props => props.login ? '17rem' : '10rem'};
         
     display: flex;
@@ -18,6 +19,7 @@ const LogoCardStyled = styled.div`
     margin-top: 4.5rem;
     img {
         width: ${props => props.login ? '9rem' : '4rem'};
+        max-width: 100%;
     }
 
     h1 {
