@@ -24,12 +24,12 @@ function Historic() {
                 <Item
                     date='30/11'
                     value={`${77777.77}`}
-                    description='0123456789MatesMateusMateus0123456789'
+                    description='0123456789'
                     type='input' />
                 <Item
                     date='30/11'
                     value={`${77777.77}`}
-                    description='0123456789MatesMateusMateus0123456789'
+                    description='0123456789'
                     type='output' />
             </HistoricItemsStyled>
             <HistoricBalanceStyled>
@@ -126,7 +126,7 @@ const HistoricItemsStyled = styled.div`
     
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: 0.4rem;
 
     overflow: auto;
 `;
