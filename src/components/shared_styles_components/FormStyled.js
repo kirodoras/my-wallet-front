@@ -40,6 +40,9 @@ const FormStyled = styled.form`
     }
 
     button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
         align-content: center;
         height: 2.5rem;
         background: #0F0815;

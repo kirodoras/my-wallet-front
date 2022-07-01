@@ -1,11 +1,50 @@
-import { Link } from "react-router-dom";
+import React from 'react';
+import axios from "axios";
+import { Link, useNavigate } from "react-router-dom";
 
+import Loading from './shared_components/Loading';
 import styled from 'styled-components';
 import LogoCardStyled from "./shared_styles_components/LogoCardStyled";
 import FormStyled from "./shared_styles_components/FormStyled"
 import logoImg from '../assets/logo.png';
 
 export default function Register() {
+    const navigate = useNavigate();
+    const [name, setName] = React.useState('');
+    const [email, setEmail] = React.useState('');
+    const [password, setPassword] = React.useState('');
+    const [confirmPassword, setConfirmPassword] = React.useState('');
+    const [disabled, setDisabled] = React.useState(false);
+    const [buttonContent, setButtonContent] = React.useState('Cadastrar');
+
+    function submitData(event) {
+        event.preventDefault();
+        setDisabled(true);
+        setButtonContent(<Loading size={50} />);
+        if (password !== confirmPassword) {
+            alert('Verifique se digitou corretamente a senha');
+            setDisabled(false);
+            setButtonContent('Cadastrar');
+            return;
+        }
+        const URL = `http://localhost:5000/user`;
+        const promise = axios.post(URL,
+            {
+                email: email,
+                name: name,
+                password: password
+            });
+        promise.then((response) => {
+            navigate('/');
+            console.log(response);
+        }).catch((err) => {
+            alert('Erro no cadastro');
+            setDisabled(false);
+            setButtonContent('Cadastrar');
+            console.log(err);
+        });
+    }
+
     return (
         <RegisterStyled >
             <LogoCardStyled>
@@ -13,38 +52,55 @@ export default function Register() {
                 <h1>MyWallet</h1>
             </LogoCardStyled>
 
-            <FormStyled>
+            <FormStyled onSubmit={submitData}>
                 <input
+                    disabled={disabled}
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
                     type="name"
                     placeholder="Nome"
                     autoComplete="off"
                     required
                 />
                 <input
+                    disabled={disabled}
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                     type="email"
                     placeholder="E-mail"
                     autoComplete="off"
                     required
                 />
                 <input
+                    disabled={disabled}
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
                     type="password"
                     placeholder="Senha"
                     autoComplete="off"
                     required
                 />
                 <input
+                    disabled={disabled}
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
                     type="password"
                     placeholder="Confirme a senha"
                     autoComplete="off"
                     required
                 />
                 <button
+                    disabled={disabled}
                     type='submit' >
-                    Cadastrar
+                    {buttonContent}
                 </button>
             </FormStyled>
 
-            <Link to="/">Já tem uma conta? Entre agora!</Link>
+            <Link
+                disabled={disabled}
+                to="/">
+                Já tem uma conta? Entre agora!
+            </Link>
         </RegisterStyled>
     );
 }
