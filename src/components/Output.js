@@ -42,7 +42,7 @@ const InputStyled = styled.div`
     span {
         width: 18rem;
         max-width: 100%;
-        margin-top: 2.2rem;
+        margin-top: 2.5rem;
 
         h2 {
             color: #F9F8D0;

@@ -12,7 +12,9 @@ const GlobalCss = createGlobalStyle`
         max-width: 100%;
         height: 100vh;
         background: linear-gradient(180.01deg, #550096 0.01%, #000000 128.11%);
-        background-repeat: repeat;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-position: center;
         font-family: 'Raleway', sans-serif;
     }
 
@@ -28,6 +30,11 @@ const GlobalCss = createGlobalStyle`
 
     a {
         text-decoration: none;
+    }
+
+    ion-icon {
+        color: #F9F8D0;
+        font-size: 34px;
     }
 `;
 
