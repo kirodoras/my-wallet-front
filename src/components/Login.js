@@ -1,3 +1,5 @@
+//import React from 'react';
+//import axios from "axios";
 import { Link } from "react-router-dom";
 
 import styled from 'styled-components';
@@ -6,6 +8,10 @@ import FormStyled from "./shared_styles_components/FormStyled"
 import logoImg from '../assets/logo.png';
 
 export default function Login() {
+    //const navigate = useNavigate();
+    //const [name, setName] = React.useState('');
+    //const [password, setPassword] = React.useState('');
+
     return (
         <LoginStyled >
             <LogoCardStyled login>

@@ -38,7 +38,11 @@ export default function Register() {
             navigate('/');
             console.log(response);
         }).catch((err) => {
-            alert('Erro no cadastro');
+            if(err.response.status === 409){
+                alert('Email já cadastrado');
+            } else {
+                alert('Erro no cadastro');
+            }
             setDisabled(false);
             setButtonContent('Cadastrar');
             console.log(err);
