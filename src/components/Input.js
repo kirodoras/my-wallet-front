@@ -1,14 +1,57 @@
+import React from 'react';
+import axios from "axios";
+
+import { useContext } from "react";
+import UserContext from "../contexts/UserContext";
+
+import Loading from './shared_components/Loading';
 import styled from 'styled-components';
 import FormStyled from "./shared_styles_components/FormStyled";
 
 export default function Input() {
+    const [value, setValue] = React.useState('');
+    const [description, setDescription] = React.useState('');
+    const [disabled, setDisabled] = React.useState(false);
+    const [buttonContent, setButtonContent] = React.useState('Salvar entrada');
+
+    const { token } = useContext(UserContext);
+
+    function submitData(event) {
+        event.preventDefault();
+        setDisabled(true);
+        setButtonContent(<Loading size={50} />);
+        const URL = `http://localhost:5000/ios`;
+        const AUT = { headers: { Authorization: `Bearer ${token}` } };
+        const promise = axios.post(URL,
+            {
+                type: 'input',
+                value: Number(value),
+                description: description
+            }, AUT);
+        promise.then((response) => {
+            alert('Entrada salva com sucesso');
+            setDisabled(false);
+            setButtonContent('Salvar entrada');
+            console.log(response);
+        }).catch((err) => {
+            alert('Falha em salvar entrada');
+            setDisabled(false);
+            setButtonContent('Salvar entrada');
+            console.log(err);
+        });
+    }
+
     return (
         <InputStyled>
             <span>
                 <h2>Nova entrada</h2>
             </span>
-            <FormStyled secondary>
+            <FormStyled onSubmit={submitData} secondary>
                 <input
+                    disabled={disabled}
+                    value={value}
+                    onChange={(e) => setValue(e.target.value)}
+                    min="0.01"
                     type="number"
                     step="0.01"
                     placeholder="Valor"
@@ -16,14 +59,18 @@ export default function Input() {
                     required
                 />
                 <input
+                    disabled={disabled}
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
                     type="text"
                     placeholder="Descrição"
                     autoComplete="off"
                     required
                 />
                 <button
+                    disabled={disabled}
                     type='submit' >
-                    Salvar entrada
+                    {buttonContent}
                 </button>
             </FormStyled>
         </InputStyled>
