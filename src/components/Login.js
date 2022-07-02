@@ -1,16 +1,47 @@
-//import React from 'react';
-//import axios from "axios";
-import { Link } from "react-router-dom";
+import React from 'react';
+import axios from "axios";
+import { Link, useNavigate } from "react-router-dom";
 
+import Loading from './shared_components/Loading';
 import styled from 'styled-components';
 import LogoCardStyled from "./shared_styles_components/LogoCardStyled";
 import FormStyled from "./shared_styles_components/FormStyled"
 import logoImg from '../assets/logo.png';
 
-export default function Login() {
-    //const navigate = useNavigate();
-    //const [name, setName] = React.useState('');
-    //const [password, setPassword] = React.useState('');
+export default function Login({ setName, setToken }) {
+    const navigate = useNavigate();
+    const [email, setEmail] = React.useState('');
+    const [password, setPassword] = React.useState('');
+    const [disabled, setDisabled] = React.useState(false);
+    const [buttonContent, setButtonContent] = React.useState('Cadastrar');
+
+    function submitData(event) {
+        event.preventDefault();
+        setDisabled(true);
+        setButtonContent(<Loading size={50} />);
+        const URL = `http://localhost:5000/sign-in`;
+        const promise = axios.post(URL,
+            {
+                email: email,
+                password: password
+            });
+        promise.then((response) => {
+            setName(response.data.name);
+            setToken(response.data.token);
+            console.log(response.data);
+        }).catch((err) => {
+            if (err.response.status === 404) {
+                alert('Usuário não cadastrado, cadastre-se');
+                navigate('/sign-up');
+            }
+            if (err.response.status === 401) {
+                alert('Senha ou email errados');
+            }
+            setDisabled(false);
+            setButtonContent('Cadastrar');
+            console.log(err);
+        });
+    }
 
     return (
         <LoginStyled >
@@ -19,26 +50,37 @@ export default function Login() {
                 <h1>MyWallet</h1>
             </LogoCardStyled>
 
-            <FormStyled>
+            <FormStyled onSubmit={submitData}>
                 <input
+                    disabled={disabled}
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                     type="email"
                     placeholder="E-mail"
                     autoComplete="off"
                     required
                 />
                 <input
+                    disabled={disabled}
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
                     type="password"
                     placeholder="Senha"
                     autoComplete="off"
                     required
                 />
                 <button
+                    disabled={disabled}
                     type='submit' >
-                    Entrar
+                    {buttonContent}
                 </button>
             </FormStyled>
 
-            <Link to="/sign-up">Primeira vez? Cadastre-se!</Link>
+            <Link
+                disabled={disabled}
+                to="/sign-up">
+                Primeira vez? Cadastre-se!
+            </Link>
         </LoginStyled>
     );
 }

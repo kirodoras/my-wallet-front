@@ -1,3 +1,5 @@
+import React from 'react';
+
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 import ResetCss from "./styles/ResetCss";
 import GlobalCss from "./styles/GlobalCss";
@@ -10,12 +12,15 @@ import Output from "./components/Output";
 import Error from "./components/Error";
 
 export default function App() {
+    const [name, setName] = React.useState('');
+    const [token, setToken] = React.useState('');
+
     return (
         <BrowserRouter>
             <ResetCss />
             <GlobalCss />
             <Routes>
-                <Route path="/" element={<Login />} />
+                <Route path="/" element={<Login setName={setName} setToken={setToken} />} />
                 <Route path="/sign-up" element={<Register />} />
                 <Route path="/transactions" element={<Transactions />} />
                 <Route path="/input" element={<Input />} />
