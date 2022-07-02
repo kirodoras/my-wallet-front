@@ -9,7 +9,7 @@ import styled from 'styled-components';
 
 export default function Transactions() {
     const navigate = useNavigate();
-    const { name, token } = useContext(UserContext);
+    const { name, token, setName, setToken } = useContext(UserContext);
     const [balance, setBalance] = React.useState([]);
     const [transactions, setTransactions] = React.useState([]);
 
@@ -30,13 +30,18 @@ export default function Transactions() {
         }
     }, [token, navigate]);
 
+    function cleanLogin() {
+        localStorage.setItem('MyWallet-Name', '');
+        localStorage.setItem('MyWallet-Token', '');
+        setName('');
+        setToken('');
+    }
+
     return (
         <TransactionsStyled>
             <span>
                 <h2>{`Olá, ${name}`}</h2>
-                <Link to="/">
-                    <ion-icon name="exit-outline"></ion-icon>
-                </Link>
+                <ion-icon onClick={cleanLogin} name="exit-outline"></ion-icon>
             </span>
             {transactions ? <Historic balance={balance} transactions={transactions} /> : <NoHistoric />}
             <LinksToAdd />

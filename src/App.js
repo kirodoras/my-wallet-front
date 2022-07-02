@@ -13,8 +13,20 @@ import Output from "./components/Output";
 import Error from "./components/Error";
 
 export default function App() {
-    const [name, setName] = React.useState('');
-    const [token, setToken] = React.useState('');
+    const [name, setName] = React.useState(getName);
+    const [token, setToken] = React.useState(getToken);
+
+    function getToken() {
+        const localToken = localStorage.getItem('MyWallet-Token');
+        if (localToken !== '' && localToken !== undefined && localToken !== null) return localToken;
+        return '';
+    }
+
+    function getName() {
+        const localname = localStorage.getItem('MyWallet-Name');
+        if (localname !== undefined && localname !== null && localname !== '') return localname;
+        return '';
+    }
 
     return (
         <UserContext.Provider value={{ name, setName, token, setToken }}>

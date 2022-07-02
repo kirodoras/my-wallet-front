@@ -18,7 +18,14 @@ export default function Login() {
     const [disabled, setDisabled] = React.useState(false);
     const [buttonContent, setButtonContent] = React.useState('Cadastrar');
 
-    const { setName, setToken } = useContext(UserContext);
+    const { name, token, setName, setToken } = useContext(UserContext);
+
+    React.useEffect(() => {
+        if (token !== '' && token !== undefined && token !== null &&
+            name !== undefined && name !== null && name !== '') {
+            navigate("/transactions");
+        }
+    }, [token, name, navigate]);
 
     function submitData(event) {
         event.preventDefault();
@@ -33,6 +40,8 @@ export default function Login() {
         promise.then((response) => {
             setName(response.data.name);
             setToken(response.data.token);
+            localStorage.setItem('MyWallet-Name', response.data.name);
+            localStorage.setItem('MyWallet-Token', response.data.token);
             navigate("/transactions");
             console.log(response.data);
         }).catch((err) => {
