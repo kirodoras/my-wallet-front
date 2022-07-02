@@ -34,7 +34,9 @@ export default function Transactions() {
         <TransactionsStyled>
             <span>
                 <h2>{`Olá, ${name}`}</h2>
-                <ion-icon name="exit-outline"></ion-icon>
+                <Link to="/">
+                    <ion-icon name="exit-outline"></ion-icon>
+                </Link>
             </span>
             {transactions ? <Historic balance={balance} transactions={transactions} /> : <NoHistoric />}
             <LinksToAdd />
