@@ -81,6 +81,9 @@ export default function Output() {
                     {buttonContent}
                 </button>
             </FormStyled>
+            <Link to="/transactions">
+                Voltar
+            </Link>
         </InputStyled>
     );
 }
@@ -106,5 +109,13 @@ const InputStyled = styled.div`
             line-height: 1rem;
             letter-spacing: 0.05em;
         }
+    }
+
+    a {
+        color: #F9F8D0;
+        font-weight: 700;
+        font-size: 15px;
+        line-height: 18px;
+        margin-top: 2.2rem;
     }
 `;
