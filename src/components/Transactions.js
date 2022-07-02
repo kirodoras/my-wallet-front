@@ -143,7 +143,7 @@ const HistoricStyled = styled.div`
 const HistoricItemsStyled = styled.div`
     width: 100%;
     max-width: 100%;
-    height: 95%;
+    height: 94%;
     
     display: flex;
     flex-direction: column;
@@ -181,7 +181,7 @@ const ItemStyled = styled.div`
 
     &>span {
         display: flex;
-        justify-content: center;
+        justify-content: flex-end;
         width: 26%;
         color: ${props => props.type === 'input' ? '#03AC00' : '#C70000'}
     }
@@ -194,7 +194,7 @@ const HistoricBalanceStyled = styled.div`
     align-items: center;
     justify-content: space-between;
     border-top: 1px solid rgba(134, 6, 235, 0.2);
-    padding: 0.3rem 0.4rem 0 0.4rem;
+    padding: 0.3rem 0.4rem 0.2rem 0.4rem;
     &>span:nth-child(1) {
         font-weight: 700;
         font-size: 17px;
