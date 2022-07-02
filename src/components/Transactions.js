@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { useContext } from "react";
 import UserContext from "../contexts/UserContext";
@@ -8,6 +8,7 @@ import UserContext from "../contexts/UserContext";
 import styled from 'styled-components';
 
 export default function Transactions() {
+    const navigate = useNavigate();
     const { name, token } = useContext(UserContext);
     const [balance, setBalance] = React.useState([]);
     const [transactions, setTransactions] = React.useState([]);
@@ -24,8 +25,10 @@ export default function Transactions() {
             }).catch((err) => {
                 console.log(err);
             });
+        } else {
+            navigate("/");
         }
-    }, [token]);
+    }, [token, navigate]);
 
     return (
         <TransactionsStyled>

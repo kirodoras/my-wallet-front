@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from "axios";
+import { Link, useNavigate } from "react-router-dom";
 
 import { useContext } from "react";
 import UserContext from "../contexts/UserContext";
@@ -9,12 +10,19 @@ import styled from 'styled-components';
 import FormStyled from "./shared_styles_components/FormStyled";
 
 export default function Input() {
+    const navigate = useNavigate();
     const [value, setValue] = React.useState('');
     const [description, setDescription] = React.useState('');
     const [disabled, setDisabled] = React.useState(false);
     const [buttonContent, setButtonContent] = React.useState('Salvar entrada');
 
     const { token } = useContext(UserContext);
+
+    React.useEffect(() => {
+        if(!token){
+            navigate("/");
+        }
+    }, [token, navigate]);
 
     function submitData(event) {
         event.preventDefault();
