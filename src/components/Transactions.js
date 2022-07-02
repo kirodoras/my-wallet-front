@@ -1,53 +1,72 @@
+import React from 'react';
+import axios from "axios";
 import { Link } from "react-router-dom";
+
+import { useContext } from "react";
+import UserContext from "../contexts/UserContext";
 
 import styled from 'styled-components';
 
 export default function Transactions() {
-    const name = 'Mateus';
-    const HistoricLength = true;
+    const { name, token } = useContext(UserContext);
+    const [balance, setBalance] = React.useState([]);
+    const [transactions, setTransactions] = React.useState([]);
+
+    React.useEffect(() => {
+        if (token.length > 0) {
+            const URL = `http://localhost:5000/ios`;
+            const AUT = { headers: { Authorization: `Bearer ${token}` } };
+            const promise = axios.get(URL, AUT);
+            promise.then((response) => {
+                setBalance(response.data.balance);
+                setTransactions(response.data.transactions);
+                console.log(response.data);
+            }).catch((err) => {
+                console.log(err);
+            });
+        }
+    }, [token]);
+
     return (
         <TransactionsStyled>
             <span>
                 <h2>{`Olá, ${name}`}</h2>
                 <ion-icon name="exit-outline"></ion-icon>
             </span>
-            {HistoricLength ? <Historic /> : <NoHistoric />}
+            {transactions ? <Historic balance={balance} transactions={transactions} /> : <NoHistoric />}
             <LinksToAdd />
         </TransactionsStyled>
     );
 }
 
-function Historic() {
+function Historic({ balance, transactions }) {
     return (
         <HistoricStyled >
             <HistoricItemsStyled>
-                <Item
-                    date='30/11'
-                    value={`${77777.77}`}
-                    description='0123456789'
-                    type='input' />
-                <Item
-                    date='30/11'
-                    value={`${77777.77}`}
-                    description='0123456789'
-                    type='output' />
+                {transactions.map((value, index) =>
+                    <Item
+                        key={index}
+                        day={value.day}
+                        value={value.value}
+                        description={value.description}
+                        type={value.type} />)}
             </HistoricItemsStyled>
-            <HistoricBalanceStyled>
+            <HistoricBalanceStyled balance={Number(balance)}>
                 <span>SALDO</span>
-                <span>2849,96</span>
+                <span>{Number(balance).toFixed(2)}</span>
             </HistoricBalanceStyled>
         </HistoricStyled>
     );
 }
 
-function Item({ date, value, description, type }) {
+function Item({ day, value, description, type }) {
     return (
         <ItemStyled type={type}>
             <div>
-                <span>{date}</span>
+                <span>{day}</span>
                 <span>{description}</span>
             </div>
-            <span>{value}</span>
+            <span>{Number(value).toFixed(2)}</span>
         </ItemStyled>
     );
 }
@@ -117,6 +136,8 @@ const HistoricStyled = styled.div`
     margin-top: 1rem;
     margin-bottom: 1.1rem;
     padding: 0.7rem;
+
+    font-family: 'Roboto', sans-serif;
 `;
 
 const HistoricItemsStyled = styled.div`
@@ -142,9 +163,8 @@ const ItemStyled = styled.div`
     font-weight: 400;
     font-size: 16px;
     line-height: 19px;
-
     word-wrap: break-word;
-
+    border-bottom: 1px solid rgba(134, 6, 235, 0.1);
     div {
         width: 74%;
         min-height: 1.7rem;
@@ -160,6 +180,8 @@ const ItemStyled = styled.div`
     }
 
     &>span {
+        display: flex;
+        justify-content: center;
         width: 26%;
         color: ${props => props.type === 'input' ? '#03AC00' : '#C70000'}
     }
@@ -169,8 +191,10 @@ const HistoricBalanceStyled = styled.div`
     width: 100%;
     max-width: 100%;
     display: flex;
+    align-items: center;
     justify-content: space-between;
-
+    border-top: 1px solid rgba(134, 6, 235, 0.2);
+    padding: 0.3rem 0.4rem 0 0.4rem;
     &>span:nth-child(1) {
         font-weight: 700;
         font-size: 17px;
@@ -178,7 +202,7 @@ const HistoricBalanceStyled = styled.div`
     }
 
     &>span:nth-child(2) {
-        color: ${props => props.green ? '#03AC00' : '#C70000'};
+        color: ${props => props.balance > 0 ? '#03AC00' : '#C70000'};
     }
 `;
 
