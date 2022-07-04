@@ -43,7 +43,7 @@ export default function Transactions() {
                 <h2>{`Olá, ${name}`}</h2>
                 <ion-icon onClick={cleanLogin} name="exit-outline"></ion-icon>
             </span>
-            {transactions ? <Historic balance={balance} transactions={transactions} /> : <NoHistoric />}
+            {transactions.length ? <Historic balance={balance} transactions={transactions} /> : <NoHistoric />}
             <LinksToAdd />
         </TransactionsStyled>
     );
