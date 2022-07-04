@@ -15,7 +15,7 @@ export default function Transactions() {
 
     React.useEffect(() => {
         if (token.length > 0) {
-            const URL = `http://localhost:5000/ios`;
+            const URL = `https://myprettywallet.herokuapp.com/ios`;
             const AUT = { headers: { Authorization: `Bearer ${token}` } };
             const promise = axios.get(URL, AUT);
             promise.then((response) => {

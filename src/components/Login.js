@@ -31,7 +31,7 @@ export default function Login() {
         event.preventDefault();
         setDisabled(true);
         setButtonContent(<Loading size={50} />);
-        const URL = `http://localhost:5000/sign-in`;
+        const URL = `https://myprettywallet.herokuapp.com/sign-in`;
         const promise = axios.post(URL,
             {
                 email: email,

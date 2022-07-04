@@ -28,7 +28,7 @@ export default function Input() {
         event.preventDefault();
         setDisabled(true);
         setButtonContent(<Loading size={50} />);
-        const URL = `http://localhost:5000/ios`;
+        const URL = `https://myprettywallet.herokuapp.com/ios`;
         const AUT = { headers: { Authorization: `Bearer ${token}` } };
         const promise = axios.post(URL,
             {

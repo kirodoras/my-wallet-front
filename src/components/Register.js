@@ -27,7 +27,7 @@ export default function Register() {
             setButtonContent('Cadastrar');
             return;
         }
-        const URL = `http://localhost:5000/sign-up`;
+        const URL = `https://myprettywallet.herokuapp.com/sign-up`;
         const promise = axios.post(URL,
             {
                 email: email,
